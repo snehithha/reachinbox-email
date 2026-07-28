@@ -15,6 +15,8 @@ export const scheduleEmail = async (
     // ✅ Validate request body
     const validatedData = scheduleEmailSchema.parse(req.body);
 
+    throw new Error("I AM INSIDE THE CONTROLLER");
+
     // Save email to PostgreSQL
     const job = await createEmailJob({
       recipient: validatedData.recipient,
@@ -22,7 +24,10 @@ export const scheduleEmail = async (
       body: validatedData.body,
       sender: validatedData.sender,
       scheduledAt: new Date(validatedData.scheduledAt),
+      
     });
+
+    
 
     // Add job to BullMQ
     const bullJob = await emailQueue.add(

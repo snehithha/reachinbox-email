@@ -12,10 +12,14 @@ import {
   getDelayUntilNextHour,
 } from "../services/ratelimiter.service";
 
+// Removed accidental top-level job logging (job is only defined inside the worker callback)
+
+
 const worker = new Worker(
   "email-queue",
   async (job) => {
     console.log("\n📧 Processing Email Job");
+    
 
     try {
       // ==========================
@@ -42,7 +46,14 @@ const worker = new Worker(
       // 2. Rate Limit
       // ==========================
 
-      const allowed = await canSendEmail(job.data.sender);
+      console.log(
+        "Hourly Limit:",
+        job.data.hourlyLimit
+      );
+
+      const allowed = await canSendEmail(
+        job.data.sender
+      );
 
       if (!allowed) {
         console.log("⏳ Hourly limit reached.");
@@ -90,7 +101,14 @@ const worker = new Worker(
       //   )
       // );
 
-      const slot = await reserveSendSlot();
+
+      console.log(
+        "Delay:",
+        job.data.delayBetweenEmails
+      );
+
+      const slot = await reserveSendSlot(
+      );
 
       const wait = slot - Date.now();
       

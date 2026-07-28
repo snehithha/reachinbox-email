@@ -1,11 +1,155 @@
+# POST http://localhost:5000/api/email/schedule
+# Content-Type: application/json
+
+# {
+#   "recipient": "test@example.com",
+#   "subject": "Hello",
+#   "body": "Testing BullMQ",
+#   "sender": "ReachInbox",
+#   "scheduledAt": "2026-07-28T05:00:00Z"
+# }
+
+
+# GET http://localhost:5000/api/email
+
+
+
+###
+# POST http://localhost:5000/api/email/schedule
+# Content-Type: application/json
+
+# {
+#   "recipient": "test1@example.com",
+#   "subject": "Email 1",
+#   "body": "Testing",
+#   "sender": "ReachInbox",
+#   "scheduledAt": "2026-07-28T07:36:00.000Z"
+# }
+
+# ###
+# POST http://localhost:localhost:5000/api/email/schedule
+# Content-Type: application/json
+
+# {
+#   "recipient": "test2@example.com",
+#   "subject": "Email 2",
+#   "body": "Testing",
+#   "sender": "ReachInbox",
+#   "scheduledAt": "2026-07-28T07:36:00.000Z"
+# }
+
+# ###
+# POST http://localhost:5000/api/email/schedule
+# Content-Type: application/json
+
+# {
+#   "recipient": "test3@example.com",
+#   "subject": "Email 3",
+#   "body": "Testing",
+#   "sender": "ReachInbox",
+#   "scheduledAt": "2026-07-28T07:36:00.000Z"
+# }
+
+# ###
+# POST http://localhost:5000/api/email/schedule
+# Content-Type: application/json
+
+# {
+#   "recipient": "test4@example.com",
+#   "subject": "Email 4",
+#   "body": "Testing",
+#   "sender": "ReachInbox",
+#   "scheduledAt": "2026-07-28T07:36:00.000Z"
+# }
+
+# ###
+# POST http://localhost:5000/api/email/schedule
+# Content-Type: application/json
+
+# {
+#   "recipient": "test5@example.com",
+#   "subject": "Email 5",
+#   "body": "Testing",
+#   "sender": "ReachInbox",
+#   "scheduledAt": "2026-07-28T07:36:00.000Z"
+# }
+
+
+# GET http://localhost:5000/api/email
+
+
+# ###
+# POST http://localhost:5000/api/email/schedule
+# Content-Type: application/json
+
+# {
+#   "recipient": "test1@example.com",
+#   "subject": "Rate Limit Test 1",
+#   "body": "Testing rate limiter",
+#   "sender": "ReachInbox",
+#   "scheduledAt": "2026-07-28T09:32:00.000Z"
+# }
+
+# ###
+# POST http://localhost:5000/api/email/schedule
+# Content-Type: application/json
+
+# {
+#   "recipient": "test2@example.com",
+#   "subject": "Rate Limit Test 2",
+#   "body": "Testing rate limiter",
+#   "sender": "ReachInbox",
+#   "scheduledAt": "2026-07-28T09:32:00.000Z"
+# }
+
+# ###
+# POST http://localhost:5000/api/email/schedule
+# Content-Type: application/json
+
+# {
+#   "recipient": "test3@example.com",
+#   "subject": "Rate Limit Test 3",
+#   "body": "Testing rate limiter",
+#   "sender": "ReachInbox",
+#   "scheduledAt": "2026-07-28T09:32:00.000Z"
+# }
+
+# ###
+# POST http://localhost:5000/api/email/schedule
+# Content-Type: application/json
+
+# {
+#   "recipient": "test4@example.com",
+#   "subject": "Rate Limit Test 4",
+#   "body": "Testing rate limiter",
+#   "sender": "ReachInbox",
+#   "scheduledAt": "2026-07-28T09:32:00.000Z"
+# }
+
+# ###
+# POST http://localhost:5000/api/email/schedule
+# Content-Type: application/json
+
+# {
+#   "recipient": "test@example.com",
+#   "subject": "Assignment Test",
+#   "body": "Hello!",
+#   "sender": "Snehithha",
+#   "scheduledAt": "2026-07-28T10:25:00Z",
+#   "delayBetweenEmails": 5000,
+#   "hourlyLimit": 50
+# }
+
 POST http://localhost:5000/api/email/schedule
 Content-Type: application/json
 
 {
-  "recipient": "test@example.com",
-  "subject": "Hello",
-  "body": "Testing BullMQ",
-  "sender": "ReachInbox",
-  "scheduledAt": "2026-07-28T05:00:00Z"
-
+  "recipient": "buford.streich@ethereal.email",
+  "subject": "Test 2",
+  "body": "Testing custom delay and hourly limit",
+  "sender": "Snehithha",
+  "scheduledAt": "2026-07-28T11:39:00.000Z",
+  "delayBetweenEmails": 5000,
+  "hourlyLimit": 5
 }
+
