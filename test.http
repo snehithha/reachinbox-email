@@ -6,5 +6,6 @@ Content-Type: application/json
   "subject": "Hello",
   "body": "Testing BullMQ",
   "sender": "ReachInbox",
-  "scheduledAt": "2026-07-29T10:00:00Z"
+  "scheduledAt": "2026-07-28T05:00:00Z"
+
 }
