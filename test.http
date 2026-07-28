@@ -1,0 +1,10 @@
+POST http://localhost:5000/api/email/schedule
+Content-Type: application/json
+
+{
+  "recipient": "test@example.com",
+  "subject": "Hello",
+  "body": "Testing BullMQ",
+  "sender": "ReachInbox",
+  "scheduledAt": "2026-07-29T10:00:00Z"
+}
