@@ -7,6 +7,7 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+console.log("✅ app.ts loaded");
 app.use("/api/email", emailRoutes);
 
 app.get("/", (_, res) => {
