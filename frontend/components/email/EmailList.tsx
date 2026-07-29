@@ -1,98 +1,76 @@
-"use client";
+﻿"use client";
 
-import { useEffect, useState } from "react";
-import api from "@/services/api";
+import { Dispatch, SetStateAction } from "react";
+import EmailListItem from "@/components/email/EmailListItem";
 import { Email } from "@/types/email";
+import EmptyState from "@/components/ui/EmptyState";
+import ErrorCard from "@/components/ui/ErrorCard";
+import Spinner from "@/components/ui/Spinner";
 
 interface Props {
+  emails: Email[];
   selectedEmail: Email | null;
-  setSelectedEmail: React.Dispatch<React.SetStateAction<Email | null>>;
-  refreshKey?: number;
+  setSelectedEmail: Dispatch<SetStateAction<Email | null>>;
+  loading: boolean;
+  error: string | null;
+  emptyLabel: string;
 }
 
 export default function EmailList({
+  emails,
   selectedEmail,
   setSelectedEmail,
-  refreshKey,
+  loading,
+  error,
+  emptyLabel,
 }: Props) {
-  const [emails, setEmails] = useState<Email[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    async function loadEmails() {
-      try {
-        const res = await api.get("/email");
-
-        const emailList = Array.isArray(res.data.emails)
-          ? res.data.emails
-          : [];
-
-        setEmails(emailList);
-
-        if (emailList.length > 0 && !selectedEmail) {
-          setSelectedEmail(emailList[0]);
-        }
-      } catch (err) {
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    loadEmails();
-  }, [refreshKey, selectedEmail, setSelectedEmail]);
-
   if (loading) {
     return (
-      <div className="w-80 border-r bg-white p-6">
-        Loading emails...
+      <div className="w-full max-w-sm border-r border-slate-200 bg-white p-6">
+        <div className="rounded-3xl border border-slate-200 bg-slate-50 p-6 shadow-sm">
+          <Spinner />
+          <p className="mt-4 text-sm text-slate-500">Loading messages...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="w-full max-w-sm border-r border-slate-200 bg-white p-6">
+        <ErrorCard
+          title="Unable to load emails"
+          description={error}
+        />
+      </div>
+    );
+  }
+
+  if (!emails.length) {
+    return (
+      <div className="w-full max-w-sm border-r border-slate-200 bg-white p-6">
+        <EmptyState
+          title={emptyLabel}
+          description="No messages match your current search and filter."
+          actionLabel="Compose email"
+          actionHref="/compose"
+        />
       </div>
     );
   }
 
   return (
-    <div className="w-80 border-r bg-white overflow-y-auto">
-      <div className="p-4 border-b">
-        <h2 className="font-semibold text-lg">
-          Scheduled Emails
-        </h2>
+    <div className="h-full overflow-y-auto border-r border-gray-200 bg-gray-50 p-4">
+      <div className="space-y-3">
+        {emails.map((email) => (
+          <EmailListItem
+            key={email.id}
+            email={email}
+            selected={selectedEmail?.id === email.id}
+            onSelect={() => setSelectedEmail(email)}
+          />
+        ))}
       </div>
-
-      {emails.map((email) => (
-        <div
-  key={email.id}
-  onClick={() => setSelectedEmail(email)}
-  className={`border-b p-4 cursor-pointer transition ${
-    selectedEmail?.id === email.id
-      ? "bg-green-50 border-l-4 border-green-500"
-      : "hover:bg-gray-50"
-  }`}
->
-  <h3 className="font-semibold text-gray-800 truncate">
-    {email.recipient}
-  </h3>
-
-  <p className="text-sm text-gray-600 mt-1 truncate">
-    {email.subject}
-  </p>
-
-  <p className="text-xs text-gray-400 mt-2">
-    {new Date(email.scheduledAt).toLocaleString()}
-  </p>
-
-  <span
-    className={`inline-flex mt-3 rounded-full px-3 py-1 text-xs font-medium ${
-      email.status === "SENT"
-        ? "bg-green-100 text-green-700"
-        : email.status === "PENDING"
-        ? "bg-yellow-100 text-yellow-700"
-        : "bg-red-100 text-red-700"
-    }`}
-  >
-    {email.status}
-  </span>
-</div>
-      ))}
     </div>
   );
 }

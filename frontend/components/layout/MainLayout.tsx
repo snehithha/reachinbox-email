@@ -8,13 +8,16 @@ interface Props {
 
 export default function MainLayout({ children }: Props) {
   return (
-    <div className="h-screen flex bg-[#F8FAFC]">
+    <div className="flex h-screen w-screen overflow-hidden bg-white">
+      {/* Sidebar */}
       <Sidebar />
 
-      <div className="flex flex-col flex-1">
+      {/* Right Section */}
+      <div className="flex flex-1 flex-col overflow-hidden">
         <Header />
 
-        <main className="flex-1 overflow-hidden">
+        {/* Content */}
+        <main className="flex flex-1 overflow-hidden bg-white">
           {children}
         </main>
       </div>

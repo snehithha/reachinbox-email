@@ -4,8 +4,9 @@ export interface Email {
   sender: string;
   subject: string;
   body: string;
-  scheduledAt: string;
   status: string;
+  scheduledAt: string;
+  sentAt?: string | null;
   createdAt: string;
   updatedAt: string;
 }
