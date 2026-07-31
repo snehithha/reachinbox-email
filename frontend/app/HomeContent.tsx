@@ -20,13 +20,14 @@ const filterOptions = [
   { label: "Failed", value: "FAILED" },
 ];
 
-const searchParams = useSearchParams();
+
 
 export default function HomeContent() {
   const router = useRouter();
   const [selectedEmail, setSelectedEmail] = useState<Email | null>(null);
   const [searchText, setSearchText] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
+  const searchParams = useSearchParams();
 
   useEffect(() => {
   const filter = searchParams.get("filter");
