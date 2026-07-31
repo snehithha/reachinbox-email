@@ -38,7 +38,7 @@ export default function Sidebar() {
       const emails = await getEmails();
 
       setCounts({
-        scheduled: emails.filter((e) => e.status === "PENDING").length,
+        scheduled: emails.filter((e) => e.status === "SCHEDULED").length,
         sent: emails.filter((e) => e.status === "SENT").length,
       });
     }

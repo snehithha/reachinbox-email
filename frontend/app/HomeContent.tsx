@@ -1,7 +1,6 @@
 "use client";
 
 import { useMemo, useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import MainLayout from "@/components/layout/MainLayout";
 import EmailList from "@/components/email/EmailList";
@@ -11,6 +10,7 @@ import Modal from "@/components/ui/Modal";
 import { Email } from "@/types/email";
 import { deleteEmailById } from "@/services/email";
 import useEmails from "@/hooks/useEmails";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const filterOptions = [
   { label: "All", value: "all" },
@@ -20,6 +20,8 @@ const filterOptions = [
   { label: "Failed", value: "FAILED" },
 ];
 
+const searchParams = useSearchParams();
+
 export default function HomeContent() {
   const router = useRouter();
   const [selectedEmail, setSelectedEmail] = useState<Email | null>(null);
@@ -27,17 +29,25 @@ export default function HomeContent() {
   const [statusFilter, setStatusFilter] = useState("all");
 
   useEffect(() => {
-  const params = new URLSearchParams(window.location.search);
-  const filter = params.get("filter");
+  const filter = searchParams.get("filter");
 
-  if (filter === "sent") {
-    setStatusFilter("SENT");
-  } else if (filter === "scheduled") {
-    setStatusFilter("PENDING");
-  } else {
-    setStatusFilter("all");
+  switch (filter) {
+    case "sent":
+      setStatusFilter("SENT");
+      break;
+
+    case "scheduled":
+      setStatusFilter("PENDING"); // or "SCHEDULED" if that's how your app stores scheduled emails
+      break;
+
+    case "failed":
+      setStatusFilter("FAILED");
+      break;
+
+    default:
+      setStatusFilter("all");
   }
-}, []);
+}, [searchParams]);
   const [showDelete, setShowDelete] = useState(false);
 
   const { emails, loading, error, refresh, stats } = useEmails();
