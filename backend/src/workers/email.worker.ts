@@ -1,8 +1,7 @@
 import { Worker } from "bullmq";
 import redis from "../config/redis";
 import prisma from "../config/prisma";
-import transporter from "../config/mailer";
-import nodemailer from "nodemailer";
+import brevo from "../config/mailer";
 import emailQueue from "../queue/email.queue";
 import { reserveSendSlot } from "../services/throttle.service";
 
@@ -124,21 +123,24 @@ const worker = new Worker(
       // 4. Send Email
       // ==========================
 
-      const info = await transporter.sendMail({
-        from: `"${job.data.sender}" <${process.env.EMAIL_USER}>`,
-        to: job.data.recipient,
-        subject: job.data.subject,
-        text: job.data.body,
-      });
-
-      console.log(
-        `📨 Email sent at ${new Date().toLocaleTimeString()}`
-      );
       
-      console.log(
-        "Preview URL:",
-        nodemailer.getTestMessageUrl(info)
-      );
+
+const response = await brevo.post("/smtp/email", {
+  sender: {
+    name: job.data.sender,
+    email: process.env.EMAIL_FROM,
+  },
+  to: [
+    {
+      email: job.data.recipient,
+    },
+  ],
+  subject: job.data.subject,
+  textContent: job.data.body,
+});
+
+console.log("Email sent!");
+console.log(response.data);
 
       // ==========================
       // 5. Mark SENT

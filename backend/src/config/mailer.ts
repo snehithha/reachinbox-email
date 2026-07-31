@@ -1,16 +1,15 @@
-import nodemailer from "nodemailer";
+import axios from "axios";
 import dotenv from "dotenv";
 
 dotenv.config();
 
-const transporter = nodemailer.createTransport({
-  host: process.env.EMAIL_HOST,
-  port: Number(process.env.EMAIL_PORT),
-  secure: false,
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
+const brevo = axios.create({
+  baseURL: "https://api.brevo.com/v3",
+  headers: {
+    "api-key": process.env.BREVO_API_KEY!,
+    "Content-Type": "application/json",
+    Accept: "application/json",
   },
-  connectionTimeout: 10000,
-  greetingTimeout: 10000,
 });
+
+export default brevo;

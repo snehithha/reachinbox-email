@@ -16,6 +16,7 @@
   "dependencies": {
     "@getbrevo/brevo": "^6.0.2",
     "@prisma/client": "^6.19.3",
+    "axios": "^1.19.0",
     "bullmq": "^5.81.2",
     "cors": "^2.8.6",
     "csv-parser": "^3.2.1",
